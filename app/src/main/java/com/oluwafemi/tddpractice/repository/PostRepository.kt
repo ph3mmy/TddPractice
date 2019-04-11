@@ -5,9 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.oluwafemi.tddpractice.api_service.ApiUtils
 import com.oluwafemi.tddpractice.model.Post
-import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Call
+
 
 class PostRepository {
 
@@ -16,7 +17,7 @@ class PostRepository {
 
     fun getAllPosts(): LiveData<List<Post>> {
         allPostLiveData = MutableLiveData()
-        retrofitClient?.getAllPosts()?.enqueue(object: Callback<List<Post>>{
+        retrofitClient?.getAllPosts()?.enqueue(object: Callback<List<Post>> {
             override fun onFailure(call: Call<List<Post>>, t: Throwable) {
 
                 Log.e("REPO" ,"error == ${t.localizedMessage}")
