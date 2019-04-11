@@ -35,9 +35,18 @@ class PostListFragment: Fragment() {
         viewModel = ViewModelProviders.of(this).get(PostViewModel::class.java)
 
         viewModel.getAllPosts().observe(this,
-            Observer<List<Post>> { t -> Log.e(TAG, "Size of list == ${t?.size}") })
+            Observer<List<Post>> { t ->
+                Log.e(TAG, "Size of list == ${t?.size}")
+                bindPostsToRecyclerView(t)
+            })
 
         return binding.root
+    }
+
+    private fun bindPostsToRecyclerView(posts: List<Post>?) {
+
+
+
     }
 
     companion object {
