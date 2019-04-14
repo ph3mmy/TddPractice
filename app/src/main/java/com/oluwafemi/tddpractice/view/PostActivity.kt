@@ -22,7 +22,7 @@ class PostActivity : BaseActivity() {
     private fun switchFragment(fragment: Fragment, tag: String) {
         val fm: FragmentManager = supportFragmentManager
         val ft = fm.beginTransaction()
-        ft.add(fragment, tag)
+        ft.replace(R.id.frame_post, fragment, tag)
         ft.commit()
     }
 }
