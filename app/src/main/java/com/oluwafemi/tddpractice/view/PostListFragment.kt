@@ -3,11 +3,9 @@ package com.oluwafemi.tddpractice.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -47,13 +45,11 @@ class PostListFragment: Fragment(), PostRecyclerListAdapter.PostClickListener {
 
         viewModel.getAllPosts().observe(this,
             Observer<List<Post>> { t ->
-                Log.e(TAG, "Size of list == ${t?.size}")
                 adapter.submitList(t)
             })
     }
 
     override fun onPostClicked(post: Post) {
-        Toast.makeText(postActivity, "clicked Post == ${post.title}", Toast.LENGTH_LONG).show()
         val intent = Intent(postActivity, PostDetailActivity::class.java)
         intent.putExtra(KEY_POST, post.toString())
         startActivity(intent)
