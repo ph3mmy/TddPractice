@@ -3,7 +3,7 @@ package com.oluwafemi.tddpractice.model
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
-class Post() {
+class Post {
 
     @SerializedName("userId")
     var userId: String? = null
