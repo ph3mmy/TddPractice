@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentManager
 import com.oluwafemi.tddpractice.R
 import com.oluwafemi.tddpractice.databinding.ActivityMainBinding
 
-class PostActivity : BaseActivity() {
+class PostListActivity : BaseActivity() {
 
     lateinit var binding: ActivityMainBinding
 

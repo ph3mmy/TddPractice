@@ -1,6 +1,7 @@
 package com.oluwafemi.tddpractice.view
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,19 +14,20 @@ import androidx.lifecycle.ViewModelProviders
 import com.oluwafemi.tddpractice.adapter.PostRecyclerListAdapter
 import com.oluwafemi.tddpractice.databinding.FragmentPostListBinding
 import com.oluwafemi.tddpractice.model.Post
+import com.oluwafemi.tddpractice.view.PostDetailsFragment.Companion.KEY_POST
 import com.oluwafemi.tddpractice.viewmodel.PostViewModel
 
 class PostListFragment: Fragment(), PostRecyclerListAdapter.PostClickListener {
 
     lateinit var binding: FragmentPostListBinding
     lateinit var viewModel: PostViewModel
-    lateinit var postActivity: PostActivity
+    lateinit var postActivity: PostListActivity
     lateinit var adapter: PostRecyclerListAdapter
 
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is PostActivity) {
+        if (context is PostListActivity) {
             postActivity = context
         }
     }
@@ -52,6 +54,9 @@ class PostListFragment: Fragment(), PostRecyclerListAdapter.PostClickListener {
 
     override fun onPostClicked(post: Post) {
         Toast.makeText(postActivity, "clicked Post == ${post.title}", Toast.LENGTH_LONG).show()
+        val intent = Intent(postActivity, PostDetailActivity::class.java)
+        intent.putExtra(KEY_POST, post.toString())
+        startActivity(intent)
     }
 
     companion object {
