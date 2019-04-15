@@ -1,5 +1,6 @@
 package com.oluwafemi.tddpractice.view
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +15,14 @@ class PostDetailsFragment: Fragment() {
 
     lateinit var binding: FragmentPostDetailsBinding
     lateinit var post: Post
+    lateinit var activity: PostDetailActivity
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is PostDetailActivity) {
+            activity = PostDetailActivity()
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentPostDetailsBinding.inflate(inflater, container, false)
@@ -24,9 +33,26 @@ class PostDetailsFragment: Fragment() {
         return binding.root
     }
 
+    private fun setUpToolbar(post: Post?) {
+//        activity.setUpToolbar(binding.toolbar)
+        binding.collapsingToolbar.title = post?.title
+        Log.e(TAG, "toolbar == ${binding.toolbar}  \ncollAPT == ${binding.collapsingToolbar}")
+        /*activity.setSupportActionBar(binding.toolbar)
+        activity.supportActionBar?.setDisplayShowHomeEnabled(true)
+        activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)*/
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        setUpToolbar(post)
         Log.e(TAG, "our passed post == $post")
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        setUpToolbar(post)
+        Log.e(TAG, "AFT ACTiCr*ted our passed post == $post")
     }
 
     companion object {
