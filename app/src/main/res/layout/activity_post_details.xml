@@ -9,6 +9,8 @@
                   type="com.oluwafemi.tddpractice.model.author.Author"/>
         <variable name="post"
                   type="com.oluwafemi.tddpractice.model.Post"/>
+        <variable name="viewmodel"
+                  type="com.oluwafemi.tddpractice.viewmodel.PostViewModel"/>
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -136,7 +138,7 @@
                         tools:text="0801234567 || wade.co.uk"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@{author.phone}"
+                        android:text="@{viewmodel.getAuthorFormattedPhoneWebsite(author)}"
                         android:fontFamily="sans-serif-condensed-light"
                         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
                         app:layout_constraintStart_toStartOf="@id/tv_coy_name"

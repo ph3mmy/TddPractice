@@ -17,4 +17,8 @@ class PostViewModel: ViewModel() {
     fun getPostAuthor(userId: String): LiveData<Author>  {
         return repository.getPostAuthor(userId)
     }
+
+    fun getAuthorFormattedPhoneWebsite(author: Author): String? {
+        return author.phone + " || " + author.website
+    }
 }

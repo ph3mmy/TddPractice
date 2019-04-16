@@ -39,6 +39,7 @@ class PostDetailActivity: BaseActivity() {
             binding.isAuthorLoaded = true
             binding.author = it
             binding.post = post
+            binding.viewmodel = viewModel
             binding.executePendingBindings()
         })
     }
