@@ -19,6 +19,6 @@ class PostViewModel: ViewModel() {
     }
 
     fun getAuthorFormattedPhoneWebsite(author: Author): String? {
-        return author.phone + " || " + author.website
+        return author.phone + " || http://" + author.website
     }
 }

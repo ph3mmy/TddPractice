@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.gson.Gson
 import com.oluwafemi.tddpractice.R
 import com.oluwafemi.tddpractice.databinding.ActivityPostDetailsBinding
@@ -31,7 +32,25 @@ class PostDetailActivity: BaseActivity() {
         val gson = Gson()
         post = gson.fromJson(postString, Post::class.java)
         setUpToolbar(binding.toolbar)
+
+        setupCommentBottomSheet()
+
         fetchPostAuthorDetail(post.userId)
+    }
+
+    private fun setupCommentBottomSheet() {
+        val bottomSheetBehavior = BottomSheetBehavior.from(binding.bsComment.rootView)
+        /*bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(p0: View, p1: Float) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onStateChanged(p0: View, p1: Int) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+        })*/
+
     }
 
     private fun fetchPostAuthorDetail(userId: String?) {

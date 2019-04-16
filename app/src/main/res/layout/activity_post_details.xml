@@ -180,5 +180,9 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
+        <include
+                android:id="@+id/bs_comment"
+                layout="@layout/bottom_sheet_comment"/>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
