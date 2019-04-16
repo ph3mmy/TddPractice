@@ -45,6 +45,9 @@ class PostListFragment: Fragment(), PostRecyclerListAdapter.PostClickListener {
 
         viewModel.getAllPosts().observe(this,
             Observer<List<Post>> { t ->
+
+                binding.pbPostList.visibility = View.GONE
+                binding.rvAllPost.visibility = View.VISIBLE
                 adapter.submitList(t)
             })
     }

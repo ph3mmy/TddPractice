@@ -1,6 +1,7 @@
 package com.oluwafemi.tddpractice.view
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -50,6 +51,13 @@ class PostDetailActivity: BaseActivity() {
         Glide.with(this)
             .load("http://lorempixel.com/400/200/nature/"+post.userId)
             .into(binding.ivPost)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item!!.itemId == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 
