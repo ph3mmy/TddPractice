@@ -1,6 +1,7 @@
 package com.oluwafemi.tddpractice.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.Toolbar
@@ -10,11 +11,13 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.gson.Gson
-import com.oluwafemi.tddpractice.R
+import com.oluwafemi.tddpractice.adapter.CommentRecyclerListAdapter
 import com.oluwafemi.tddpractice.databinding.ActivityPostDetailsBinding
+import com.oluwafemi.tddpractice.model.Comment
 import com.oluwafemi.tddpractice.model.Post
 import com.oluwafemi.tddpractice.view.PostDetailsFragment.Companion.KEY_POST
 import com.oluwafemi.tddpractice.viewmodel.PostViewModel
+
 
 class PostDetailActivity: BaseActivity() {
 
@@ -24,7 +27,7 @@ class PostDetailActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_post_details)
+        binding = DataBindingUtil.setContentView(this, com.oluwafemi.tddpractice.R.layout.activity_post_details)
         viewModel = ViewModelProviders.of(this).get(PostViewModel::class.java)
 
         val bundle = intent.extras
@@ -37,17 +40,50 @@ class PostDetailActivity: BaseActivity() {
         setupCommentBottomSheet()
 
         fetchPostAuthorDetail(post.userId)
+        fetchPostComments(post.id)
+    }
+
+    private fun fetchPostComments(id: String?) {
+        viewModel.getPostComments(id!!).observe(this, Observer {
+            addCommentToBottomSheet(it)
+        })
+    }
+
+    private fun addCommentToBottomSheet(it: List<Comment>?) {
+        binding.tvComment.text = "Comments (" + it?.size +")"
+        sendListToCommentAdapter(it)
+    }
+
+    private fun sendListToCommentAdapter(it: List<Comment>?) {
+        val commentAdapter = CommentRecyclerListAdapter()
+        binding.commentAdapter = commentAdapter
+        binding.executePendingBindings()
+        commentAdapter.submitList(it)
     }
 
     private fun setupCommentBottomSheet() {
         val bottomSheetBehavior = BottomSheetBehavior.from(binding.clBottomSheet)
+
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+//        bottomSheetBehavior.peekHeight = 340
+
+        bottomSheetBehavior.isHideable = false
+
         bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(p0: View, p1: Float) {
 
             }
 
-            override fun onStateChanged(p0: View, p1: Int) {
+            override fun onStateChanged(bottomSheetHeading: View, newState: Int) {
 
+                // Check Logs to see how bottom sheets behaves
+                when (newState) {
+                    BottomSheetBehavior.STATE_COLLAPSED -> Log.e("Bottom Sheet Behaviour", "STATE_COLLAPSED")
+                    BottomSheetBehavior.STATE_DRAGGING -> Log.e("Bottom Sheet Behaviour", "STATE_DRAGGING")
+                    BottomSheetBehavior.STATE_EXPANDED -> Log.e("Bottom Sheet Behaviour", "STATE_EXPANDED")
+                    BottomSheetBehavior.STATE_HIDDEN -> Log.e("Bottom Sheet Behaviour", "STATE_HIDDEN")
+                    BottomSheetBehavior.STATE_SETTLING -> Log.e("Bottom Sheet Behaviour", "STATE_SETTLING")
+                }
             }
 
         })

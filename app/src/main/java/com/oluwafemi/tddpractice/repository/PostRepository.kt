@@ -3,6 +3,7 @@ package com.oluwafemi.tddpractice.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.oluwafemi.tddpractice.api_service.ApiUtils
+import com.oluwafemi.tddpractice.model.Comment
 import com.oluwafemi.tddpractice.model.Post
 import com.oluwafemi.tddpractice.model.author.Author
 import retrofit2.Call
@@ -14,6 +15,7 @@ class PostRepository {
 
     lateinit var allPostLiveData: MutableLiveData<List<Post>>
     lateinit var authorLiveData: MutableLiveData<Author>
+    lateinit var commentsLiveData: MutableLiveData<List<Comment>>
     private val retrofitClient = ApiUtils.getApiService()
 
     fun getAllPosts(): LiveData<List<Post>> {
@@ -49,6 +51,24 @@ class PostRepository {
 
         })
         return authorLiveData
+
+    }
+
+    fun getPostComments(postId: String): LiveData<List<Comment>> {
+        commentsLiveData = MutableLiveData()
+        retrofitClient?.getAllComments(postId)?.enqueue(object: Callback<List<Comment>> {
+            override fun onFailure(call: Call<List<Comment>>, t: Throwable) {
+
+            }
+
+            override fun onResponse(call: Call<List<Comment>>, response: Response<List<Comment>>) {
+                if (response.isSuccessful && response.body() != null) {
+                    commentsLiveData.value = response.body()
+                }
+            }
+
+        })
+        return commentsLiveData
 
     }
 

@@ -1,5 +1,6 @@
 package com.oluwafemi.tddpractice.api_service
 
+import com.oluwafemi.tddpractice.model.Comment
 import com.oluwafemi.tddpractice.model.Post
 import com.oluwafemi.tddpractice.model.author.Author
 import retrofit2.Call
@@ -17,6 +18,6 @@ interface ApiService {
     @GET("users") // http://jsonplaceholder.typicode.com/users
     fun getPostAuthor(@Query("id") userId : String): Call<List<Author>>
 
-    @GET("comments") // http://jsonplaceholder.typicode.com/comments
-    fun getAllComments(): Call<List<Post>>
+    @GET("comments") // http://jsonplaceholder.typicode.com/comments?postId=11
+    fun getAllComments(@Query("postId") postId : String): Call<List<Comment>>
 }
