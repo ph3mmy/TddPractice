@@ -18,6 +18,7 @@ package com.oluwafemi.tddpractice.adapter
 
 import android.view.View
 import androidx.databinding.BindingAdapter
+import androidx.databinding.ViewDataBinding
 
 @BindingAdapter("isGone")
 fun bindIsGone(view: View, isGone: Boolean) {
@@ -26,4 +27,9 @@ fun bindIsGone(view: View, isGone: Boolean) {
     } else {
         View.VISIBLE
     }
+}
+
+@BindingAdapter("getView")
+fun bindGetView(view: View, binding: ViewDataBinding) {
+//    view = binding.root
 }

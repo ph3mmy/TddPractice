@@ -2,6 +2,7 @@ package com.oluwafemi.tddpractice.view
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -39,17 +40,17 @@ class PostDetailActivity: BaseActivity() {
     }
 
     private fun setupCommentBottomSheet() {
-        val bottomSheetBehavior = BottomSheetBehavior.from(binding.bsComment.rootView)
-        /*bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        val bottomSheetBehavior = BottomSheetBehavior.from(binding.clBottomSheet)
+        bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(p0: View, p1: Float) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
             }
 
             override fun onStateChanged(p0: View, p1: Int) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
             }
 
-        })*/
+        })
 
     }
 
