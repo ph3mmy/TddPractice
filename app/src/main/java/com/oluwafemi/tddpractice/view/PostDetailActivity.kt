@@ -1,7 +1,6 @@
 package com.oluwafemi.tddpractice.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.Toolbar
@@ -75,15 +74,7 @@ class PostDetailActivity: BaseActivity() {
             }
 
             override fun onStateChanged(bottomSheetHeading: View, newState: Int) {
-
-                // Check Logs to see how bottom sheets behaves
-                when (newState) {
-                    BottomSheetBehavior.STATE_COLLAPSED -> Log.e("Bottom Sheet Behaviour", "STATE_COLLAPSED")
-                    BottomSheetBehavior.STATE_DRAGGING -> Log.e("Bottom Sheet Behaviour", "STATE_DRAGGING")
-                    BottomSheetBehavior.STATE_EXPANDED -> Log.e("Bottom Sheet Behaviour", "STATE_EXPANDED")
-                    BottomSheetBehavior.STATE_HIDDEN -> Log.e("Bottom Sheet Behaviour", "STATE_HIDDEN")
-                    BottomSheetBehavior.STATE_SETTLING -> Log.e("Bottom Sheet Behaviour", "STATE_SETTLING")
-                }
+                
             }
 
         })
