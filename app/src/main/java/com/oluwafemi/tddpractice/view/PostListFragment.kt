@@ -10,13 +10,18 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.oluwafemi.tddpractice.adapter.PostRecyclerListAdapter
+import com.oluwafemi.tddpractice.app.TddPractice
 import com.oluwafemi.tddpractice.databinding.FragmentPostListBinding
 import com.oluwafemi.tddpractice.model.Post
 import com.oluwafemi.tddpractice.view.PostDetailsFragment.Companion.KEY_POST
 import com.oluwafemi.tddpractice.viewmodel.PostViewModel
+import com.oluwafemi.tddpractice.viewmodel.PostViewModelFactory
+import javax.inject.Inject
 
 class PostListFragment: Fragment(), PostRecyclerListAdapter.PostClickListener {
 
+    @Inject
+    lateinit var viewModelFactory: PostViewModelFactory
     lateinit var binding: FragmentPostListBinding
     lateinit var viewModel: PostViewModel
     lateinit var postActivity: PostListActivity
@@ -30,9 +35,23 @@ class PostListFragment: Fragment(), PostRecyclerListAdapter.PostClickListener {
         }
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(PostViewModel::class.java)
+
+        viewModel.getAllPosts().observe(this,
+            Observer<List<Post>> { t ->
+
+                binding.pbPostList.visibility = View.GONE
+                binding.rvAllPost.visibility = View.VISIBLE
+                adapter.submitList(t)
+            })
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentPostListBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProviders.of(this).get(PostViewModel::class.java)
+
+        TddPractice.appComponent.inject(this)
 
         adapter = PostRecyclerListAdapter(binding.root.context, this)
         binding.rvAllPost.adapter = adapter
@@ -43,13 +62,6 @@ class PostListFragment: Fragment(), PostRecyclerListAdapter.PostClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getAllPosts().observe(this,
-            Observer<List<Post>> { t ->
-
-                binding.pbPostList.visibility = View.GONE
-                binding.rvAllPost.visibility = View.VISIBLE
-                adapter.submitList(t)
-            })
     }
 
     override fun onPostClicked(post: Post) {

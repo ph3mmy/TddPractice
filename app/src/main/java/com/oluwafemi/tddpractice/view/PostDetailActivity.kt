@@ -11,23 +11,31 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.gson.Gson
 import com.oluwafemi.tddpractice.adapter.CommentRecyclerListAdapter
+import com.oluwafemi.tddpractice.app.TddPractice
 import com.oluwafemi.tddpractice.databinding.ActivityPostDetailsBinding
 import com.oluwafemi.tddpractice.model.Comment
 import com.oluwafemi.tddpractice.model.Post
 import com.oluwafemi.tddpractice.view.PostDetailsFragment.Companion.KEY_POST
-import com.oluwafemi.tddpractice.viewmodel.PostViewModel
+import com.oluwafemi.tddpractice.viewmodel.PostDetailViewModel
+import com.oluwafemi.tddpractice.viewmodel.PostViewModelFactory
+import javax.inject.Inject
 
 
 class PostDetailActivity: BaseActivity() {
 
     lateinit var binding: ActivityPostDetailsBinding
+    @Inject
+    lateinit var viewModelFactory: PostViewModelFactory
     lateinit var post:Post
-    lateinit var viewModel: PostViewModel
+    lateinit var viewModel: PostDetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, com.oluwafemi.tddpractice.R.layout.activity_post_details)
-        viewModel = ViewModelProviders.of(this).get(PostViewModel::class.java)
+
+        TddPractice.appComponent.inject(this)
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(PostDetailViewModel::class.java)
 
         val bundle = intent.extras
         val postString = bundle?.getString(KEY_POST)
@@ -55,35 +63,36 @@ class PostDetailActivity: BaseActivity() {
 
     private fun sendListToCommentAdapter(it: List<Comment>?) {
         val commentAdapter = CommentRecyclerListAdapter()
-        binding.commentAdapter = commentAdapter
-        binding.executePendingBindings()
+        with(binding) {
+            setCommentAdapter(commentAdapter)
+            executePendingBindings()
+        }
         commentAdapter.submitList(it)
     }
 
     private fun setupCommentBottomSheet() {
         val bottomSheetBehavior = BottomSheetBehavior.from(binding.clBottomSheet)
 
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-//        bottomSheetBehavior.peekHeight = 340
+        bottomSheetBehavior.run {
+            state = BottomSheetBehavior.STATE_COLLAPSED
+            isHideable = false
+            setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                override fun onSlide(p0: View, p1: Float) {
 
-        bottomSheetBehavior.isHideable = false
+                }
 
-        bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onSlide(p0: View, p1: Float) {
+                override fun onStateChanged(p0: View, p1: Int) {
 
-            }
+                }
 
-            override fun onStateChanged(bottomSheetHeading: View, newState: Int) {
-                
-            }
-
-        })
+            })
+        }
 
     }
 
     private fun fetchPostAuthorDetail(userId: String?) {
         viewModel.getPostAuthor(userId!!).observe(this@PostDetailActivity, Observer {
-            binding.isAuthorLoaded = true
+           binding.isAuthorLoaded = true
             binding.author = it
             binding.post = post
             binding.viewmodel = viewModel
@@ -93,8 +102,10 @@ class PostDetailActivity: BaseActivity() {
 
     fun setUpToolbar(toolbar: Toolbar) {
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        with(supportActionBar!!) {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
 
         Glide.with(this)
             .load("http://lorempixel.com/400/200/nature/"+post.userId)

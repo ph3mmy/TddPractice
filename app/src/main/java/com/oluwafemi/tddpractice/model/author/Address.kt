@@ -15,4 +15,10 @@ class Address {
     @SerializedName("zipcode")
     var zipcode: String? = null
 
+
+    data class Geo(
+        @field:SerializedName("lat")
+        var lat: String? = null,
+        @SerializedName("lng") var lng: String? = null)
+
 }

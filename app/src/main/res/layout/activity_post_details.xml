@@ -10,7 +10,7 @@
         <variable name="post"
                   type="com.oluwafemi.tddpractice.model.Post"/>
         <variable name="viewmodel"
-                  type="com.oluwafemi.tddpractice.viewmodel.PostViewModel"/>
+                  type="com.oluwafemi.tddpractice.viewmodel.PostDetailViewModel"/>
         <variable name="commentAdapter"
                   type="com.oluwafemi.tddpractice.adapter.CommentRecyclerListAdapter"/>
     </data>

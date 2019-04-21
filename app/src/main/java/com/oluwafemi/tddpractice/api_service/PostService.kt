@@ -7,7 +7,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface ApiService {
+interface PostService {
 
     @GET("posts") // http://jsonplaceholder.typicode.com/posts
     fun getAllPosts(): Call<List<Post>>

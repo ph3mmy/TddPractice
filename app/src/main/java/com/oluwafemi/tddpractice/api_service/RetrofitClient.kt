@@ -1,17 +1,11 @@
 package com.oluwafemi.tddpractice.api_service
 
 import android.util.Log
-import okhttp3.Interceptor
+import com.oluwafemi.tddpractice.utility.BASE_URL
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
-import java.io.IOException
 import java.util.concurrent.TimeUnit
-
-import com.oluwafemi.tddpractice.utility.BASE_URL
 
 object RetrofitClient {
 

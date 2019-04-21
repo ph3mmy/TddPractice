@@ -3,16 +3,11 @@ package com.oluwafemi.tddpractice.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.oluwafemi.tddpractice.model.Comment
-import com.oluwafemi.tddpractice.model.Post
 import com.oluwafemi.tddpractice.model.author.Author
 import com.oluwafemi.tddpractice.repository.PostRepository
 import javax.inject.Inject
 
-class PostViewModel @Inject constructor(private val repository: PostRepository): ViewModel() {
-
-    fun getAllPosts(): LiveData<List<Post>> {
-        return repository.getAllPosts()
-    }
+class PostDetailViewModel @Inject constructor(private val repository: PostRepository): ViewModel() {
 
     fun getPostAuthor(userId: String): LiveData<Author>  {
         return repository.getPostAuthor(userId)

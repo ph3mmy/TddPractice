@@ -2,12 +2,12 @@ package com.oluwafemi.tddpractice.api_service
 
 object ApiUtils {
 
-    private var apiService: ApiService? = null
+    private var apiService: PostService? = null
 
-    fun getApiService(): ApiService? {
+    fun getApiService(): PostService? {
 
         if (apiService == null) {
-            apiService = RetrofitClient.client!!.create(ApiService::class.java)
+            apiService = RetrofitClient.client!!.create(PostService::class.java)
         }
         return apiService
     }
